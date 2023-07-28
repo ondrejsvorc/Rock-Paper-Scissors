@@ -1,2 +1,3 @@
-# Rock-Paper-Scissors
-Game of Rock-Paper-Scissors
+# Rock Paper Scissors
+
+The rock paper scissors game is created using functional programming in F#.
