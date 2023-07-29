@@ -1,7 +1,10 @@
 ﻿open System
 
 // Defines the possible game moves.
-type Move = Rock | Paper | Scissors
+type Move =
+    | Rock 
+    | Paper 
+    | Scissors
 
 // Generates a random move for the computer.
 let getRandomMove () =

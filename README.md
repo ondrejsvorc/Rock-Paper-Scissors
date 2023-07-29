@@ -8,7 +8,10 @@ The `Rock Paper Scissors` game is created with `functional programming` in mind 
 
 ```fsharp
 // Defines the possible game moves.
-type Move = Rock | Paper | Scissors
+type Move =
+    | Rock 
+    | Paper 
+    | Scissors
 ```
 
 #### [Pattern Matching](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/pattern-matching)
