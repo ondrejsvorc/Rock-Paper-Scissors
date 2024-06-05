@@ -16,9 +16,9 @@ type UserInput =
     | Invalid
 
 type RoundResult = {
-    PlayerMove: Move
-    ComputerMove: Move
-    Winner: Winner
+    PlayerMove : Move
+    ComputerMove : Move
+    Winner : Winner
 }
 
 let getComputerMove () =
