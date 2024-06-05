@@ -48,7 +48,7 @@ let parseInput (playerInput: string) =
 
 let printRoundResult (result: RoundResult) =
     match result.Winner with
-    | Winner.Human -> printfn "%s" $"You win! Computer chose {result.ComputerMove}."
+    | Human -> printfn "%s" $"You win! Computer chose {result.ComputerMove}."
     | Computer -> printfn "%s" $"Computer wins! Computer chose {result.ComputerMove}"
     | Nobody -> printfn "%s" "It's a tie!"
 
