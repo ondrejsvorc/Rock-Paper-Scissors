@@ -29,9 +29,9 @@ let getComputerMove () =
 
 let determineWinner (playerMove: Move) (computerMove: Move) =
     match playerMove, computerMove with
-    | Rock, Scissors | Paper, Rock | Scissors, Paper -> Winner.Human
-    | Scissors, Rock | Rock, Paper | Paper, Scissors -> Winner.Computer
-    | _ -> Winner.Nobody
+    | Rock, Scissors | Paper, Rock | Scissors, Paper -> Human
+    | Scissors, Rock | Rock, Paper | Paper, Scissors -> Computer
+    | _ -> Nobody
 
 let playRound (playerMove: Move) =
     let computerMove = getComputerMove ()
@@ -49,8 +49,8 @@ let parseInput (playerInput: string) =
 let printRoundResult (result: RoundResult) =
     match result.Winner with
     | Winner.Human -> printfn "%s" $"You win! Computer chose {result.ComputerMove}."
-    | Winner.Computer -> printfn "%s" $"Computer wins! Computer chose {result.ComputerMove}"
-    | Winner.Nobody -> printfn "%s" "It's a tie!"
+    | Computer -> printfn "%s" $"Computer wins! Computer chose {result.ComputerMove}"
+    | Nobody -> printfn "%s" "It's a tie!"
 
 let rec gameLoop () =
     printfn "%s" "Choose your move: (1) Rock, (2) Paper, (3) Scissors, or (q) to quit:"
