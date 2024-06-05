@@ -1,49 +1,66 @@
 ﻿open System
 
-// Defines the possible game moves.
 type Move =
     | Rock 
     | Paper 
     | Scissors
 
-// Generates a random move for the computer.
-let getRandomMove () =
-    let random = Random()
-    match random.Next(3) with
+type Winner =
+    | Human
+    | Computer
+    | Nobody
+
+type UserInput =
+    | Choose of Move
+    | Quit
+    | Invalid
+
+type RoundResult = {
+    PlayerMove: Move
+    ComputerMove: Move
+    Winner: Winner
+}
+
+let getComputerMove () =
+    match Random().Next(3) with
     | 0 -> Rock
     | 1 -> Paper
     | _ -> Scissors
 
-// Determines the winner of the game.
 let determineWinner (playerMove: Move) (computerMove: Move) =
     match playerMove, computerMove with
-    | Rock, Scissors | Paper, Rock | Scissors, Paper -> "Player wins!"
-    | Rock, Rock | Paper, Paper | Scissors, Scissors -> "It's a tie!"
-    | _ -> "Computer wins!"
+    | Rock, Scissors | Paper, Rock | Scissors, Paper -> Winner.Human
+    | Scissors, Rock | Rock, Paper | Paper, Scissors -> Winner.Computer
+    | _ -> Winner.Nobody
 
-// Main game loop.
+let playRound (playerMove: Move) =
+    let computerMove = getComputerMove ()
+    let winner = determineWinner playerMove computerMove
+    { PlayerMove = playerMove; ComputerMove = computerMove; Winner = winner }
+
+let parseInput (playerInput: string) =
+    match playerInput.Trim().ToLower() with
+    | "1" | "rock" -> Choose Rock
+    | "2" | "paper" -> Choose Paper
+    | "3" | "scissors" -> Choose Scissors
+    | "q" | "quit" -> Quit
+    | _ -> Invalid
+
+let printRoundResult (result: RoundResult) =
+    match result.Winner with
+    | Winner.Human -> printfn "%s" $"You win! Computer chose {result.ComputerMove}."
+    | Winner.Computer -> printfn "%s" $"Computer wins! Computer chose {result.ComputerMove}"
+    | Winner.Nobody -> printfn "%s" "It's a tie!"
+
 let rec gameLoop () =
-    printfn "Choose your move: (1) Rock, (2) Paper, (3) Scissors, or (q) to quit."
-    let playerInput = Console.ReadLine().Trim().ToLower()
-    match playerInput with
-    | "1" | "rock" -> play Rock
-    | "2" | "paper" -> play Paper
-    | "3" | "scissors" -> play Scissors
-    | "q" | "quit" -> printfn "Thanks for playing! Goodbye!"
-    | _ -> printfn "Invalid input. Please try again."; gameLoop ()
-
-// Play one round of the game.
-and play (playerMove: Move) =
-    let computerMove = getRandomMove()
-    printfn "Player chose: %A" playerMove
-    printfn "Computer chose: %A" computerMove
-    printfn "%s" (determineWinner playerMove computerMove)
-    printfn ""
+    printfn "%s" "Choose your move: (1) Rock, (2) Paper, (3) Scissors, or (q) to quit:"
+    match Console.ReadLine() |> parseInput with
+    | Choose playerMove -> playRound playerMove |> printRoundResult
+    | Quit -> printfn "%s" "Thanks for playing! Goodbye!"; exit 0
+    | Invalid -> printfn "%s" "Invalid input. Please try again."
     gameLoop ()
 
-// Starts the main game loop.
 [<EntryPoint>]
 let main argv =
-    printfn "Welcome to Rock Paper Scissors!"
     gameLoop ()
     0
