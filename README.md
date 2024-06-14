@@ -33,11 +33,8 @@ let determineWinner (playerMove: Move) (computerMove: Move) =
 ### [Keyword 'rec'](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/functions/recursive-functions-the-rec-keyword)
 ```fsharp
 let rec gameLoop () =
-    printfn "%s" "Choose your move: (1) Rock, (2) Paper, (3) Scissors, or (q) to quit:"
-    match Console.ReadLine() |> parseInput with
-    | Choose playerMove -> playRound playerMove |> printRoundResult
-    | Quit -> printfn "%s" "Thanks for playing! Goodbye!"; exit 0
-    | Invalid -> printfn "%s" "Invalid input. Please try again."
+    printMoveOptions ()
+    Console.ReadLine() |> handlePlayerInput
     gameLoop ()
 ```
 
