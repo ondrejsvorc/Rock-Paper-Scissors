@@ -19,7 +19,9 @@ jobs:
         run: cd RockPaperScissors
 
       - name: Restore dependencies
+        working-directory: ./RockPaperScissors
         run: dotnet restore
 
       - name: Run tests
+        working-directory: ./RockPaperScissors
         run: dotnet test --configuration Release
