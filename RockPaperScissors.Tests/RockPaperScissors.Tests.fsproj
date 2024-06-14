@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="DetermineWinnerTests.fs" />
     <Compile Include="ParsePlayerInputTests.fs" />
   </ItemGroup>
 
