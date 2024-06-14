@@ -15,6 +15,9 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
+      - name: Change to project directory
+        run: cd RockPaperScissors
+
       - name: Restore dependencies
         run: dotnet restore
 
