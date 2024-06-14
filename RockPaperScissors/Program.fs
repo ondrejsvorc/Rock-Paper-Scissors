@@ -38,7 +38,16 @@ let playRound (playerMove: Move) =
     let winner = determineWinner playerMove computerMove
     { PlayerMove = playerMove; ComputerMove = computerMove; Winner = winner }
 
-let parseInput (playerInput: string) =
+let printRoundResult (result: RoundResult) =
+    match result.Winner with
+    | Human -> printfn "%s" $"You win! Computer chose {result.ComputerMove}."
+    | Computer -> printfn "%s" $"Computer wins! Computer chose {result.ComputerMove}"
+    | Nobody -> printfn "%s" "It's a tie!"
+
+let printMoveOptions () =
+    printfn "%s" "Choose your move: (1) Rock, (2) Paper, (3) Scissors, or (q) to quit:"
+
+let parsePlayerInput (playerInput: string) =
     match playerInput.Trim().ToLower() with
     | "1" | "rock" -> Choice Rock
     | "2" | "paper" -> Choice Paper
@@ -46,18 +55,15 @@ let parseInput (playerInput: string) =
     | "q" | "quit" -> Quit
     | _ -> Invalid
 
-let printRoundResult (result: RoundResult) =
-    match result.Winner with
-    | Human -> printfn "%s" $"You win! Computer chose {result.ComputerMove}."
-    | Computer -> printfn "%s" $"Computer wins! Computer chose {result.ComputerMove}"
-    | Nobody -> printfn "%s" "It's a tie!"
-
-let rec gameLoop () =
-    printfn "%s" "Choose your move: (1) Rock, (2) Paper, (3) Scissors, or (q) to quit:"
-    match Console.ReadLine() |> parseInput with
+let handlePlayerInput (playerInput: string) =
+    match parsePlayerInput playerInput with
     | Choice playerMove -> playRound playerMove |> printRoundResult
     | Quit -> printfn "%s" "Thanks for playing! Goodbye!"; exit 0
     | Invalid -> printfn "%s" "Invalid input. Please try again."
+
+let rec gameLoop () =
+    printMoveOptions ()
+    Console.ReadLine() |> handlePlayerInput
     gameLoop ()
 
 [<EntryPoint>]
