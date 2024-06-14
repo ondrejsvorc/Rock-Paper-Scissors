@@ -11,7 +11,7 @@ type Winner =
     | Nobody
 
 type UserInput =
-    | Choose of Move
+    | Choice of Move
     | Quit
     | Invalid
 
@@ -40,9 +40,9 @@ let playRound (playerMove: Move) =
 
 let parseInput (playerInput: string) =
     match playerInput.Trim().ToLower() with
-    | "1" | "rock" -> Choose Rock
-    | "2" | "paper" -> Choose Paper
-    | "3" | "scissors" -> Choose Scissors
+    | "1" | "rock" -> Choice Rock
+    | "2" | "paper" -> Choice Paper
+    | "3" | "scissors" -> Choice Scissors
     | "q" | "quit" -> Quit
     | _ -> Invalid
 
@@ -55,7 +55,7 @@ let printRoundResult (result: RoundResult) =
 let rec gameLoop () =
     printfn "%s" "Choose your move: (1) Rock, (2) Paper, (3) Scissors, or (q) to quit:"
     match Console.ReadLine() |> parseInput with
-    | Choose playerMove -> playRound playerMove |> printRoundResult
+    | Choice playerMove -> playRound playerMove |> printRoundResult
     | Quit -> printfn "%s" "Thanks for playing! Goodbye!"; exit 0
     | Invalid -> printfn "%s" "Invalid input. Please try again."
     gameLoop ()
