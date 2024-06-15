@@ -21,11 +21,13 @@ type RoundResult = {
     Winner : Winner
 }
 
-let getComputerMove () =
-    match Random().Next(3) with
-    | 0 -> Rock
-    | 1 -> Paper
-    | _ -> Scissors
+let getComputerMove =
+    let rnd = Random()
+    fun () ->
+        match rnd.Next(3) with
+        | 0 -> Rock
+        | 1 -> Paper
+        | _ -> Scissors
 
 let determineWinner (playerMove: Move) (computerMove: Move) =
     match playerMove, computerMove with
@@ -46,7 +48,7 @@ let printRoundResult (result: RoundResult) =
     |> printfn "%s"
 
 let printMoveOptions () =
-    printfn "%s" "Choose your move: (1) Rock, (2) Paper, (3) Scissors, or (q) to quit:"
+    "Choose your move: (1) Rock, (2) Paper, (3) Scissors, or (q) to quit:" |> printfn "%s"
 
 let parsePlayerInput (playerInput: string) =
     match playerInput.Trim().ToLower() with
@@ -58,16 +60,16 @@ let parsePlayerInput (playerInput: string) =
 
 let handlePlayerInput (playerInput: string) =
     match parsePlayerInput playerInput with
-    | Choice playerMove -> playRound playerMove |> printRoundResult
-    | Quit -> printfn "%s" "Thanks for playing! Goodbye!"; exit 0
-    | Invalid -> printfn "%s" "Invalid input. Please try again."
+    | Choice playerMove -> playRound playerMove |> printRoundResult; true
+    | Quit -> "Thanks for playing! Goodbye!" |> printfn "%s"; false
+    | Invalid -> "Invalid input. Please try again." |> printfn "%s"; true
 
-let rec gameLoop () =
-    printMoveOptions ()
-    Console.ReadLine() |> handlePlayerInput
-    gameLoop ()
+let gameLoop () =
+    while Console.ReadLine() |> handlePlayerInput do
+        printMoveOptions ()
 
 [<EntryPoint>]
 let main argv =
+    printMoveOptions ()
     gameLoop ()
     0

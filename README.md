@@ -14,11 +14,13 @@ type Move =
 
 ### [Pattern Matching](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/pattern-matching)
 ```fsharp
-let getComputerMove () =
-    match Random().Next(3) with
-    | 0 -> Rock
-    | 1 -> Paper
-    | _ -> Scissors
+let getComputerMove =
+    let rnd = Random()
+    fun () ->
+        match rnd.Next(3) with
+        | 0 -> Rock
+        | 1 -> Paper
+        | _ -> Scissors
 ```
 
 ### [Function Parameters](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/functions/)
@@ -30,18 +32,11 @@ let determineWinner (playerMove: Move) (computerMove: Move) =
     | _ -> Winner.Nobody
 ```
 
-### [Keyword 'rec'](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/functions/recursive-functions-the-rec-keyword)
-```fsharp
-let rec gameLoop () =
-    printMoveOptions ()
-    Console.ReadLine() |> handlePlayerInput
-    gameLoop ()
-```
-
 ### [Entry Point](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/functions/entry-point#explicit-entry-point)
 ```fsharp
 [<EntryPoint>]
 let main argv =
+    printMoveOptions ()
     gameLoop ()
     0
 ```
