@@ -40,9 +40,10 @@ let playRound (playerMove: Move) =
 
 let printRoundResult (result: RoundResult) =
     match result.Winner with
-    | Human -> printfn "%s" $"You win! Computer chose {result.ComputerMove}."
-    | Computer -> printfn "%s" $"Computer wins! Computer chose {result.ComputerMove}"
-    | Nobody -> printfn "%s" "It's a tie!"
+    | Human -> $"You win! Computer chose {result.ComputerMove}."
+    | Computer -> $"Computer wins! Computer chose {result.ComputerMove}"
+    | Nobody -> "It's a tie!"
+    |> printfn "%s"
 
 let printMoveOptions () =
     printfn "%s" "Choose your move: (1) Rock, (2) Paper, (3) Scissors, or (q) to quit:"
