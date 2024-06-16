@@ -4,7 +4,7 @@ open NUnit.Framework
 open Program
 
 [<TestFixture>]
-type DetermineWinnerTests() =
+type DetermineWinnerHumanWinsTests() =
 
     [<Test>]
     member _.``Human wins when using Rock against Scissors``() =
@@ -18,6 +18,10 @@ type DetermineWinnerTests() =
     member _.``Human wins when using Scissors against Paper``() =
         Assert.AreEqual(Human, determineWinner Scissors Paper)
 
+
+[<TestFixture>]
+type DetermineWinnerComputerWinsTests() =
+
     [<Test>]
     member _.``Computer wins when using Scissors against Rock``() =
         Assert.AreEqual(Computer, determineWinner Scissors Rock)
@@ -29,6 +33,10 @@ type DetermineWinnerTests() =
     [<Test>]
     member _.``Computer wins when using Paper against Scissors``() =
         Assert.AreEqual(Computer, determineWinner Paper Scissors)
+
+
+[<TestFixture>]
+type DetermineWinnerTieTests() =
 
     [<Test>]
     member _.``It's a tie when both use Rock``() =
