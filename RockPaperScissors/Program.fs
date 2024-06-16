@@ -64,12 +64,15 @@ let handlePlayerInput (playerInput: string) =
     | Quit -> "Thanks for playing! Goodbye!" |> printfn "%s"; false
     | Invalid -> "Invalid input. Please try again." |> printfn "%s"; true
 
-let gameLoop () =
-    while Console.ReadLine() |> handlePlayerInput do
-        printMoveOptions ()
+let playGame () =
+    let rec loop startRound =
+        if startRound then 
+            printMoveOptions ()
+            Console.ReadLine() |> handlePlayerInput |> loop
+        else ()
+    loop true
 
 [<EntryPoint>]
 let main argv =
-    printMoveOptions ()
-    gameLoop ()
+    playGame ()
     0
